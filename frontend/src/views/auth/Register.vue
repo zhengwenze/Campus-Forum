@@ -46,7 +46,14 @@
               show-password
             />
           </el-form-item>
-  
+
+          <el-form-item>
+            <el-radio-group v-model="registerForm.role" size="large">
+              <el-radio label="USER">普通用户</el-radio>
+              <el-radio label="ADMIN">管理员</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
           <el-form-item>
             <el-button 
               type="primary" 
@@ -82,7 +89,8 @@
     username: '',
     nickname: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'USER'
   })
   
   // 验证确认密码是否一致
@@ -117,11 +125,12 @@
       if (valid) {
         loading.value = true
         try {
-          // 构造后端需要的参数（通常后端只需要 username 和 password）
+          // 构造后端需要的参数
           const payload = {
             username: registerForm.username,
             password: registerForm.password,
-            nickname: registerForm.nickname
+            nickname: registerForm.nickname,
+            role: registerForm.role
           }
           
           await register(payload)

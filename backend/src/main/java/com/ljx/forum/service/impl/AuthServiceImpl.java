@@ -40,7 +40,8 @@ public class AuthServiceImpl implements AuthService {
         user.setNickname(req.nickname());
         // 密码加密存储
         user.setPassword(passwordEncoder.encode(req.password()));
-        user.setRole("USER");
+        // 根据用户选择设置角色，默认为 USER
+        user.setRole(req.role() != null && ("ADMIN".equals(req.role()) || "USER".equals(req.role())) ? req.role() : "USER");
         user.setScore(0);
         // 默认头像 (可以用一个随机头像API，或者放一张默认图)
         user.setAvatar("https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
