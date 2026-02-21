@@ -26,4 +26,6 @@ public interface IUserService extends IService<User> {
     Page<UserVO> getUserList(Page<User> page, String keyword);
     // 修改密码
     void updatePassword(PasswordUpdateRequest req);
+    // 删除用户
+    void deleteUser(Long userId);
 }

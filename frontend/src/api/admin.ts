@@ -55,3 +55,13 @@ export function appointModerator(data: ModeratorAppointRequest) {
       data
     })
 }
+
+// 用户相关
+
+// 删除用户
+export function deleteUser(id: number) {
+  return request({
+    url: `/admin/user/${id}`,
+    method: 'delete'
+  })
+}

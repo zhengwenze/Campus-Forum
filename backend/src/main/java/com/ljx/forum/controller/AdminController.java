@@ -70,4 +70,12 @@ public class AdminController {
         String msg = (req.getBoardId() != null) ? "任命成功" : "撤销成功";
         return Result.success(msg);
     }
+
+    @RequireAdmin
+    @Operation(summary = "删除用户")
+    @DeleteMapping("/user/{id}")
+    public Result<String> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return Result.success("用户删除成功");
+    }
 }

@@ -118,7 +118,71 @@
                />
              </div>
           </el-tab-pane>
-  
+
+          <el-tab-pane label="用户管理" name="user">
+            <div class="tab-action-bar">
+              <div class="filter-row">
+                <el-input 
+                  v-model="userManageKeyword" 
+                  placeholder="搜索用户名/昵称" 
+                  style="width: 300px; margin-right: 15px" 
+                  clearable
+                  @clear="handleUserManageSearch"
+                  @keyup.enter="handleUserManageSearch"
+                >
+                  <template #append>
+                    <el-button :icon="Search" @click="handleUserManageSearch" />
+                  </template>
+                </el-input>
+              </div>
+            </div>
+
+            <el-table :data="userManageList" style="width: 100%" v-loading="userManageLoading" border>
+              <el-table-column prop="id" label="ID" width="80" />
+              <el-table-column label="头像" width="70" align="center">
+                <template #default="scope">
+                  <el-avatar :size="30" :src="scope.row.avatar || defaultAvatar" />
+                </template>
+              </el-table-column>
+              <el-table-column prop="username" label="用户名" />
+              <el-table-column prop="nickname" label="昵称" />
+              <el-table-column prop="role" label="角色" width="100">
+                <template #default="scope">
+                  <el-tag size="small" :type="scope.row.role === 'ADMIN' ? 'danger' : (scope.row.role === 'MODERATOR' ? 'warning' : 'info')">
+                    {{ scope.row.role === 'ADMIN' ? '管理员' : (scope.row.role === 'MODERATOR' ? '板主' : '普通用户') }}
+                  </el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="score" label="积分" width="100" align="center" />
+              <el-table-column prop="createTime" label="注册时间" width="180">
+                <template #default="scope">{{ formatTime(scope.row.createTime) }}</template>
+              </el-table-column>
+              <el-table-column label="操作" width="120" fixed="right" align="center">
+                <template #default="scope">
+                  <el-button 
+                    type="danger" 
+                    size="small" 
+                    :icon="Delete" 
+                    plain
+                    @click="handleDeleteUser(scope.row)"
+                  >
+                    删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <div class="pagination-box">
+              <el-pagination 
+                background 
+                layout="prev, pager, next" 
+                :total="userManageTotal" 
+                :page-size="userManagePageSize"
+                @current-change="handleUserManagePageChange"
+              />
+            </div>
+          </el-tab-pane>
+
         </el-tabs>
       </el-card>
   
@@ -211,9 +275,9 @@
   import { Plus, Delete, Top, UserFilled, Search } from '@element-plus/icons-vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import { getBoardList } from '@/api/board'
-  import { getPostList } from '@/api/post'
-  import { getUserList, type UserVO } from '@/api/user' // 引入用户查询接口
-  import { addBoard, deleteBoard, deletePostAdmin, toggleTopPost, appointModerator } from '@/api/admin'
+import { getPostList } from '@/api/post'
+import { getUserList, type UserVO } from '@/api/user' // 引入用户查询接口
+import { addBoard, deleteBoard, deletePostAdmin, toggleTopPost, appointModerator, deleteUser } from '@/api/admin'
   
   const activeTab = ref('board')
   const defaultAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
@@ -241,6 +305,14 @@
   const userKeyword = ref('')
   const userTotal = ref(0)
   const userPageNum = ref(1)
+
+  // --- 用户管理相关 ---
+  const userManageList = ref<UserVO[]>([])
+  const userManageLoading = ref(false)
+  const userManageKeyword = ref('')
+  const userManageTotal = ref(0)
+  const userManagePageNum = ref(1)
+  const userManagePageSize = ref(10)
   
   // --- 方法：板块 ---
   const fetchBoards = async () => {
@@ -369,15 +441,60 @@
       }
     })
   }
-  
+
+  // --- 方法：用户管理 ---
+  const fetchUserManageList = async () => {
+    userManageLoading.value = true
+    try {
+      const res: any = await getUserList({
+        pageNum: userManagePageNum.value,
+        pageSize: userManagePageSize.value,
+        keyword: userManageKeyword.value
+      })
+      if (res.code === 0 || res.code === 200) {
+        userManageList.value = res.data.records
+        userManageTotal.value = res.data.total
+      }
+    } finally {
+      userManageLoading.value = false
+    }
+  }
+
+  const handleUserManageSearch = () => {
+    userManagePageNum.value = 1 // 搜索时重置为第一页
+    fetchUserManageList()
+  }
+
+  const handleUserManagePageChange = (page: number) => {
+    userManagePageNum.value = page
+    fetchUserManageList()
+  }
+
+  const handleDeleteUser = (user: UserVO) => {
+    ElMessageBox.confirm(`确定要删除用户【${user.nickname}】吗？删除后不可恢复！`, '警告', {
+      type: 'warning', confirmButtonText: '确定删除', confirmButtonClass: 'el-button--danger'
+    }).then(async () => {
+      try {
+        const res: any = await deleteUser(user.id)
+        if (res.code === 0 || res.code === 200) {
+          ElMessage.success('用户删除成功')
+          fetchUserManageList()
+        }
+      } catch (error) {
+        console.error('删除用户失败', error)
+      }
+    })
+  }
+
   const formatTime = (time: string) => {
     if (!time) return ''
     return time.replace('T', ' ').substring(0, 16)
   }
-  
+
   onMounted(() => {
     fetchBoards()
     fetchPosts()
+    fetchUserManageList()
   })
   </script>
   

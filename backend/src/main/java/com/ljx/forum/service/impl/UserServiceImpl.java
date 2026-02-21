@@ -153,4 +153,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setPassword(passwordEncoder.encode(req.newPassword()));
         this.updateById(user);
     }
+
+    // 删除用户
+    @Override
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = this.getById(userId);
+        if (user == null) {
+            throw new BusinessException("用户不存在");
+        }
+
+        // 逻辑删除用户
+        user.setDeleted(true);
+        this.updateById(user);
+    }
 }
