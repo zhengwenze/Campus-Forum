@@ -1,24 +1,80 @@
-# Compiled class file
-*.class
+# 编译产物
+backend/target/
+frontend/dist/
+frontend/.vite/
 
-# Log file
+# 依赖包
+backend/.mvn/
+frontend/node_modules/
+
+# 环境配置文件
+.env
+.env.local
+.env.*.local
+
+# IDE 配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+logs/
 *.log
 
-# BlueJ files
-*.ctxt
+# 构建工具
+.mvn/
 
-# Mobile Tools for Java (J2ME)
+# 测试报告
+test-results/
+
+# 临时文件
+tmp/
+temp/
 .mtj.tmp/
 
-# Package Files #
+# 数据库文件
+*.db
+*.sqlite
+
+# 打包文件
 *.jar
 *.war
-*.nar
 *.ear
+*.nar
 *.zip
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# 其他
+*.class
+*.project
+*.classpath
+*.settings/
+*.ctxt
+
+# 前端开发工具
+frontend/.eslintcache
+frontend/coverage/
+frontend/playwright-report/
+frontend/test-results/
+
+# 后端开发工具
+backend/.gradle/
+backend/build/
+
+# 本地开发配置
+local.properties
+
+# 敏感文件
+application-*.yaml
+application-*.yml
+
+# 虚拟机崩溃日志
 hs_err_pid*
 replay_pid*
