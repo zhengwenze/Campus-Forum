@@ -32,7 +32,7 @@ service.interceptors.response.use(
     // 2. 判断业务状态码 (假设后端约定 200 为成功，请根据实际情况调整，如 0 或 1)
     // 注意：这里 res.code 是业务逻辑的状态码，response.status 是 HTTP 状态码
     if (res.code !== 200) {
-      
+
       // 3. 统一提示错误信息
       ElMessage.error(res.msg || '系统繁忙，请稍后再试')
 

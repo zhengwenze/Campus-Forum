@@ -19,7 +19,7 @@ const routes = [
     path: '/admin',
     name: 'AdminDashboard',
     component: () => import('@/views/admin/AdminDashboard.vue'),
-    meta: { 
+    meta: {
       requiresAuth: true,
       requiresAdmin: true // ✅ 标记需要管理员权限
     }
@@ -28,7 +28,7 @@ const routes = [
     path: '/moderator',
     name: 'ModeratorDashboard',
     component: () => import('@/views/moderator/ModeratorDashboard.vue'),
-    meta: { 
+    meta: {
       requiresAuth: true,
       requiresModerator: true // ✅ 标记需要板主权限
     }
@@ -36,7 +36,7 @@ const routes = [
   {
     path: '/',
     // 使用 Layout 组件作为父级
-    component: () => import('@/layout/BasicLayout.vue'), 
+    component: () => import('@/layout/BasicLayout.vue'),
     meta: { requiresAuth: true },
     children: [
       {
@@ -70,7 +70,7 @@ const routes = [
         meta: { title: '个人主页' }
       },
       {
-        path: '/post/edit/:id', 
+        path: '/post/edit/:id',
         name: 'PostEdit',
         component: () => import('@/views/forum/PostCreate.vue'),
         meta: { title: '编辑帖子' }
@@ -86,27 +86,27 @@ const router = createRouter({
 
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
-    const userStore = useUserStore()
-    const isAuthenticated = !!userStore.token
-  
-    if (to.meta.requiresAuth && !isAuthenticated) {
-      next('/login')
-    } else if (to.path === '/login' && isAuthenticated) {
-      next('/')
-    } else if (to.meta.requiresAdmin) {
-      // 管理员检查
-      if (userStore.userInfo?.role === 'ADMIN') next()
-      else { ElMessage.error('无权访问'); next('/') }
-    } else if (to.meta.requiresModerator) {
-      // 板主检查
-      if (userStore.userInfo?.role === 'MODERATOR' ) {
-        next()
-      } else {
-        ElMessage.error('您不是板主，无权访问')
-        next('/')
-      }
-    } else {
+  const userStore = useUserStore()
+  const isAuthenticated = !!userStore.token
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next('/login')
+  } else if (to.path === '/login' && isAuthenticated) {
+    next('/')
+  } else if (to.meta.requiresAdmin) {
+    // 管理员检查
+    if (userStore.userInfo?.role === 'ADMIN') next()
+    else { ElMessage.error('无权访问'); next('/') }
+  } else if (to.meta.requiresModerator) {
+    // 板主检查
+    if (userStore.userInfo?.role === 'MODERATOR') {
       next()
+    } else {
+      ElMessage.error('您不是板主，无权访问')
+      next('/')
     }
-  })
+  } else {
+    next()
+  }
+})
 export default router

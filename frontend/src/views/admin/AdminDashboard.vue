@@ -3,7 +3,7 @@
       <el-card shadow="never">
         <template #header>
           <div class="card-header">
-            <span class="title">🛡️ 管理员控制台</span>
+            <span class="title">管理员控制台</span>
           </div>
         </template>
   
@@ -18,7 +18,7 @@
               <el-table-column prop="id" label="ID" width="80" />
               <el-table-column label="图标" width="80" align="center">
                 <template #default="scope">
-                  <span style="font-size: 20px">{{ scope.row.icon || '📦' }}</span>
+                  <span style="font-size: 20px">{{ scope.row.icon || '' }}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="name" label="板块名称" width="150" font-weight="bold" />
@@ -195,7 +195,7 @@
             <el-input v-model="boardForm.description" type="textarea" placeholder="板块的简单介绍" />
           </el-form-item>
           <el-form-item label="图标(Emoji)">
-            <el-input v-model="boardForm.icon" placeholder="例如：📚" style="width: 100px" />
+            <el-input v-model="boardForm.icon" placeholder="例如：" style="width: 100px" />
           </el-form-item>
           <el-form-item label="排序权重">
             <el-input-number v-model="boardForm.sort" :min="0" :max="999" />

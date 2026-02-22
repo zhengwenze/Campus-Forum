@@ -5,24 +5,33 @@
 ## 🛠 技术栈
 
 ### 前端
-- **Vue 3** - 使用 Composition API 和 `<script setup>` 语法
-- **TypeScript** - 完整的类型支持
-- **Vite** - 现代化的前端构建工具
-- **Vue Router 4** - 官方路由管理
-- **Pinia** - 状态管理
-- **Element Plus** - UI 组件库
-- **@kangc/v-md-editor** - Markdown 编辑器，支持代码高亮
-- **Sass** - CSS 预处理器
+| 技术 | 版本 | 说明 |
+|------|------|------|
+| Vue | 3.5.22 | 使用 Composition API 和 `<script setup>` 语法 |
+| TypeScript | 5.9 | 完整的类型支持 |
+| Vite | 7.1.11 | 现代化的前端构建工具 |
+| Vue Router | 4.6.3 | 官方路由管理 |
+| Pinia | 3.0.3 | 状态管理 |
+| Element Plus | 2.11.8 | UI 组件库 |
+| Axios | 1.13.2 | HTTP 客户端 |
+| @kangc/v-md-editor | 2.3.18 | Markdown 编辑器 |
+| highlight.js | 11.11.1 | 代码高亮 |
+| Sass | 1.94.2 | CSS 预处理器 |
 
 ### 后端
-- **Spring Boot 3.3.5** - 主框架
-- **Java 21** - 使用最新的 Java 特性
-- **MySQL 8.0** - 数据库
-- **MyBatis-Plus 3.5.10** - ORM 框架
-- **Redis** - 缓存
-- **Spring Security + JWT** - 安全认证
-- **Knife4j 4.3.0** - API 文档
-- **Maven** - 项目构建
+| 技术 | 版本 | 说明 |
+|------|------|------|
+| Spring Boot | 3.3.5 | 主框架 |
+| Java | 21 | 使用最新的 Java 特性 |
+| MyBatis-Plus | 3.5.10.1 | ORM 框架 |
+| Spring Security | - | 安全框架 |
+| JWT (jjwt) | 0.11.5 | 令牌认证 |
+| Knife4j | 4.3.0 | API 文档 (OpenAPI 3) |
+| Lombok | 1.18.34 | 代码简化 |
+| Hutool | 5.8.27 | Java 工具库 |
+| MySQL | 8.0 | 数据库 |
+| Redis | - | 缓存 |
+| Maven | - | 项目构建 |
 
 ## 📁 项目结构
 
@@ -80,7 +89,7 @@ forum/
 
 ### 环境要求
 - Java 21
-- Node.js v22.17.0
+- Node.js ^20.19.0 或 >=22.12.0
 - MySQL 8.0
 
 ### 后端启动

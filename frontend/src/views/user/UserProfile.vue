@@ -40,7 +40,7 @@
           <el-card shadow="never">
             <template #header>
               <div class="card-header">
-                <span>📚 {{ isOwner ? '我的帖子' : 'Ta 的帖子' }}</span>
+                <span>{{ isOwner ? '我的帖子' : 'Ta 的帖子' }}</span>
               </div>
             </template>
             

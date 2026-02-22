@@ -3,7 +3,7 @@
       <el-card class="box-card">
         <template #header>
           <div class="card-header">
-            <span class="header-title">{{ isEditMode ? '📝 编辑帖子' : '📝 发布新帖子' }}</span>
+            <span class="header-title">{{ isEditMode ? '编辑帖子' : '发布新帖子' }}</span>
             <el-button text @click="$router.back()">返回</el-button>
           </div>
         </template>

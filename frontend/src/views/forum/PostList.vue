@@ -74,7 +74,7 @@
         <el-col :span="7" class="hidden-xs-only">
           <el-card class="sidebar-card welcome-card" shadow="hover">
              <div class="welcome-header">
-               <h3>👋 欢迎来到校园论坛</h3>
+               <h3>欢迎来到校园论坛</h3>
                <p>发现有趣的内容，分享你的校园生活</p>
              </div>
           </el-card>
@@ -82,7 +82,7 @@
           <el-card class="sidebar-card" shadow="hover">
             <template #header>
               <div class="card-header">
-                <span>📌 板块导航</span>
+                <span>板块导航</span>
               </div>
             </template>
             <div class="board-tags">
